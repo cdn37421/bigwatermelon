@@ -974,28 +974,24 @@ window.__require = function e(t, n, o) {
                 }
                 var n;
                 return o(t, e), n = t, t.prototype.onLoad = function() {
-                    null != n.Instance && n.Instance.destroy(), n.Instance = this, this.clickMask.setContentSize(cc.winSize.width, cc.winSize.height), this.bgMask.setContentSize(cc.winSize.width, cc.winSize.height), this.failedUiBox.y = cc.winSize.height / 2 + this.failedUiBox.height / 2
+                    null != n.Instance && n.Instance.destroy(), n.Instance = this, this.clickMask.setContentSize(cc.winSize.width, cc.winSize.height), this.bgMask.setContentSize(cc.winSize.width, cc.winSize.height), this.failedUiBox.y = cc.winSize.height / 2 + this.failedUiBox.height / 2,
+                    this.adsButton2 && (this.adsButton2.active = !1),
+                    this.bannerButton && (this.bannerButton.active = !1),
+                    this.moreGameBtn && (this.moreGameBtn.active = !1),
+                    this.gengduoyouxi && (this.gengduoyouxi.active = !1)
                 }, t.prototype.start = function() {
                     var e = i.default.returnCurrentLanType();
-                    1 != e && (this.bencichengji.getComponent(cc.Sprite).spriteFrame = this.bencichengjiarr[e - 1], this.gengduoyouxi.getComponent(cc.Sprite).spriteFrame = this.gengduoyouxiarr[e - 1]), this.continueTip.getComponent(cc.Label).string = 1 == e ? "\u70b9\u51fb\u7ee7\u7eed" : 2 == e ? "\u9ede\u64ca\u7e7c\u7e8c" : 4 == e ? "\ud074\ub9ad \ud558\uc5ec \uacc4\uc18d" : "Click Continue", this.reStartBtn.runAction(cc.repeatForever(cc.sequence(cc.scaleTo(.5, 1.1), cc.scaleTo(.55, 1), cc.delayTime(.5)))), cc.tween(this.moreGameBtn).to(.5, {
-                        scale: 1.1
-                    }).to(.5, {
-                        scale: 1
-                    }).union().repeatForever().start(), cc.tween(this.adsButton2).to(1, {
-                        scale: .8
-                    }).to(1, {
-                        scale: .9
-                    }).union().repeatForever().start()
+                    1 != e && (this.bencichengji.getComponent(cc.Sprite).spriteFrame = this.bencichengjiarr[e - 1], this.gengduoyouxi.getComponent(cc.Sprite).spriteFrame = this.gengduoyouxiarr[e - 1]), this.continueTip.getComponent(cc.Label).string = 1 == e ? "\u70b9\u51fb\u7ee7\u7eed" : 2 == e ? "\u9ede\u64ca\u7e7c\u7e8c" : 4 == e ? "\ud074\ub9ad \ud558\uc5ec \uacc4\uc18d" : "Click Continue", this.reStartBtn.runAction(cc.repeatForever(cc.sequence(cc.scaleTo(.5, 1.1), cc.scaleTo(.55, 1), cc.delayTime(.5))))
                 }, t.prototype.update = function(e) {}, t.prototype.adsButtonFunc2 = function() {
-                    window.location.href = "https://activity.doumobfour.club/horse?appkey=8fa2be346ab599d74b7b35732652ab4d&adSpaceKey=189da8b9d29788c1cf058587fa2f7b9c&1=1"
+                    return
                 }, t.prototype.bannerButtonFunc = function() {
-                    window.location.href = "https://interaction.clotfun.online/horse?appkey=8fa2be346ab599d74b7b35732652ab4d&adSpaceKey=1baa3dd0d2eeb6e18a5f7a6d6e410e1a&from=H5&1=1"
+                    return
                 }, t.prototype.ShowFailedUi = function(e, t) {
                     var n = this;
                     this.scheduleOnce(function() {
                         r.default.Instance.HideScorePanel(), n.levelTxt.string = r.default.Instance.level.toString(), n.scoreLabel.string = s.default.score.toString(), n.highScoreLabel.string = t, n.resultTxt.string = n.GetContentByScore(e), n.overTxt.string = "\u5f53\u524d\u5173\u5361\u5df2\u5b8c\u6210" + Math.floor(r.default.Instance.nowYQ / r.default.Instance.passlevelYQ * 100) + "%", n.canClick = !1, n.levelTxt.string = e, n.bgMask.runAction(cc.fadeTo(.36, 150)), n.scheduleOnce(function() {
                             i.default.CenteredUi(10, this.di, this.levelTxt.node, this.guan), this.failedUiBox.y = cc.winSize.height / 2 + this.failedUiBox.height / 2, this.failedUiBox.runAction(cc.sequence(cc.moveTo(.36, this.failedBoxPos).easing(cc.easeBackOut()), cc.callFunc(function() {
-                                this.clickMask.on(cc.Node.EventType.TOUCH_START, this.OnClickCloseMask, this), this.moreGameBtn.on(cc.Node.EventType.TOUCH_START, this.OnClickMoreGame, this), this.continueTip.opacity = 0, this.continueTip.runAction(cc.repeatForever(cc.sequence(cc.fadeIn(.5), cc.delayTime(.5), cc.fadeOut(.5)))), this.canClick = !0
+                                this.clickMask.on(cc.Node.EventType.TOUCH_START, this.OnClickCloseMask, this), this.continueTip.opacity = 0, this.continueTip.runAction(cc.repeatForever(cc.sequence(cc.fadeIn(.5), cc.delayTime(.5), cc.fadeOut(.5)))), this.canClick = !0
                             }, this)))
                         }, 0)
                     }, .5)
@@ -1007,7 +1003,7 @@ window.__require = function e(t, n, o) {
                     this.canClick && 0 == cc.find("Canvas/uiEffectPanel").childrenCount && a.default.Instance.RestartGame()
                 }, t.prototype.OnClickMoreGame = function() {
                     this.canClick && (this.moreGameBtn.off(cc.Node.EventType.TOUCH_START, this.OnClickMoreGame, this), this.canClick = !1, this.moreGameBtn.runAction(cc.sequence(cc.scaleTo(.1, 1.1), cc.scaleTo(.1, 1))), this.scheduleOnce(function() {
-                        // window.location.href = "http://m.wesane.com/"
+                        // Promotion link removed
                     }, .15))
                 }, t.prototype.GetContentByScore = function(e) {
                     var t = Math.ceil(e / 1500 * 94);
@@ -1728,11 +1724,18 @@ window.__require = function e(t, n, o) {
         cc._RF.push(t, "3ef908fwfNIwJsOjET8tCh2", "LoadSceneJs");
         var o = {
             goToCover: function(e, t, n, o, c) {
-                var a = e;
-                a = null == a || void 0 == a || e, console.log("LoadBoolBeforeLoadS", a), this.needShow = !1, a && a ? (this.needShow = !0, showMyAds()) : this.needShow = !1, this.needShow ? (void 0 == preloader && this.startGoToGame(n, o, c), resCompleteFlag = !0, adCompleteFlag && resCompleteFlag && this.startGoToGame(n, o, c)) : this.startGoToGame(n, o, c)
+                this.startGoToGame(n, o, c)
             },
             startGoToGame: function(e, t, n) {
-                console.log("goToScene"), noAdGoToScene()
+                cc.director.loadScene(e, null, function() {
+                    if (t) {
+                        var canvas = document.getElementById("GameCanvas");
+                        if (canvas) canvas.style.visibility = "";
+                        var div = document.getElementById("GameDiv");
+                        if (div) div.style.backgroundImage = ""
+                    }
+                    cc.loader.onProgress = null
+                })
             }
         };
         t.exports = o, cc._RF.pop()
@@ -1762,23 +1765,9 @@ window.__require = function e(t, n, o) {
                 this.gameHeight = cc.winSize.height,
                 o.playNum,
                 o.playNum++,
-                c.loadingLayer("panel/LinkIconSpr"),
                 o.mainGameJs = this, o.publicGameBool || this.play()
             },
-            play: function() {
-                console.log(1);
-                var e = this;
-                // adBreak({
-                //     type: "next",
-                //     name: "restart-game",
-                //     beforeBreak: function() {
-                //         e.enableButtons()
-                //     },
-                //     afterBreak: function() {
-                //         e.enableButtons()
-                //     }
-                // })
-            },
+            play: function() {},
             enableButtons: function() {},
             addTouchEvents: function() {
                 var e = this;
@@ -1817,10 +1806,7 @@ window.__require = function e(t, n, o) {
                 }))), this.gameOverT2.node.opacity = 0, this.gameOverT2.node.y = this.gameOverT1.node.y - 100, this.gameOverT2.node.runAction(cc.sequence(cc.delayTime(.2), cc.spawn(cc.fadeIn(1), cc.moveBy(1, 0, -50)), cc.delayTime(.3))), this.gameOverT2.node.runAction(cc.sequence(cc.delayTime(2), cc.scaleTo(.3, 1.2).easing(cc.easeSineInOut()), cc.scaleTo(.3, 1).easing(cc.easeSineInOut()))).repeatForever()
             },
             initEndLayer: function() {
-                this.gameOverT1.node.active = !1, this.gameOverT2.node.active = !1, this.gameOverToEnd.active = !1, o.publicGameBool || adBreak({
-                    type: "next",
-                    name: "restart-game"
-                }), a.gotoEndLayer1()
+                this.gameOverT1.node.active = !1, this.gameOverT2.node.active = !1, this.gameOverToEnd.active = !1, !0, a.gotoEndLayer1()
             },
             start: function() {},
             update: function(e) {
@@ -1833,10 +1819,7 @@ window.__require = function e(t, n, o) {
                 o.gameScore = e
             },
             RestartGame: function() {
-                o.GAME_OVER_BOOL = !0, o.gameScore = 0, o.publicGameBool || adBreak({
-                    type: "next",
-                    name: "restart-game"
-                }), c.loadingScene("MainGameScene")
+                o.GAME_OVER_BOOL = !0, o.gameScore = 0, !0, c.loadingScene("MainGameScene")
             },
             SetGameEndScore: function() {
                 a.gameOverShowText(o.gameScore, 1)
@@ -1958,10 +1941,7 @@ window.__require = function e(t, n, o) {
                     var e = this;
                     this.congratulation.children[2].active = !1, this.congratulation.children[1].runAction(cc.sequence(cc.scaleTo(.5, 0).easing(cc.easeBackIn()), cc.callFunc(function() {
                         e.congratulation.active = !1, a.default.GameUpdateCtrl = !0
-                    }))), l.publicGameBool || adBreak({
-                        type: "next",
-                        name: "restart-game"
-                    }), this.scheduleOnce(function() {
+                    }))), !0, this.scheduleOnce(function() {
                         e.player.getComponent(cc.PolygonCollider).enabled = !0
                     }, 1)
                 }, t.Instance = null, c([f(cc.Node)], t.prototype, "mainCamera", void 0), c([f(cc.Node)], t.prototype, "bgLayer", void 0), c([f(cc.Label)], t.prototype, "scoreLabel", void 0), c([f(cc.Node)], t.prototype, "scorePanel", void 0), c([f(cc.Node)], t.prototype, "guidePanel", void 0), c([f(cc.Node)], t.prototype, "injuredPanel", void 0), c([f(cc.Node)], t.prototype, "levelPanel", void 0), c([f(cc.Node)], t.prototype, "levelProgress", void 0), c([f(cc.Node)], t.prototype, "heartPanel", void 0), c([f(cc.Node)], t.prototype, "congratulation", void 0), c([f(cc.Node)], t.prototype, "adsButton", void 0), c([f(cc.Node)], t.prototype, "player", void 0), t = n = c([p], t)
@@ -2029,9 +2009,9 @@ window.__require = function e(t, n, o) {
                         if (a.playNum >= 1) return;
                         a.playNum++
                     }
-                    a.launchScene = e, a.Bros = t, a.caS = n, this.curType = 1, this.getHttpGameId(), this.gamePV_load(), console.log("thisg", this.gameHttpId), o.httpInitUrl(this.gameHttpId), o.send("103", null, this.getLinkGameReturn, this);
+                    a.launchScene = e, a.Bros = t, a.caS = n, this.curType = 1;
                     var c = this.initLanguage();
-                    this.gameNameText = c.game_name, this.gameInfoText = c.game_info, this.txtStartText = c.txtStart, this.txtMoreText = c.txtMore, this.txtAgainText = c.txtAgain, this.gameEndLText = c.gameEndL, this.gameEndL1Text = c.gameEndL1, this.bgLayRgb = c.bgRgb, this.gameEndName1 = c.gameT2, this.gameEndName2 = c.gameT3, this.gameEndUrl1 = c.gameUrl1, this.gameEndUrl2 = c.gameUrl2, this.langugeType = this.curType
+                    this.gameNameText = c.game_name, this.gameInfoText = c.game_info, this.txtStartText = c.txtStart, this.txtMoreText = c.txtMore, this.txtAgainText = c.txtAgain, this.gameEndLText = c.gameEndL, this.gameEndL1Text = c.gameEndL1, this.bgLayRgb = c.bgRgb, this.gameEndName1 = c.gameT2, this.gameEndName2 = c.gameT3, this.gameEndUrl1 = c.gameUrl1, this.gameEndUrl2 = c.gameUrl2, this.langugeType = this.curType, i.goToCover(!1, !1, e, t, n)
                 },
                 getHttpGameId: function() {
                     var e = window.location.href,
@@ -2093,20 +2073,10 @@ window.__require = function e(t, n, o) {
                     return null
                 },
                 gotoEndLayer: function() {
-                    if (a.publicGameBool) this.showGameEndLayer();
-                    else {
-                        if (adEndComplete = !1, resEndComplete = !1, this.needShow = null, 1 == window.navigator.onLine) {
-                            var e = this.adShowAfter;
-                            console.log("ad", e), (e = null == e || void 0 == e || this.adShowAfter) ? (this.needShow = !0, console.log("showMyad"), showMyAds()) : this.needShow = !1
-                        } else console.log("showOver1"), this.showGameEndLayer(), this.needShow = null;
-                        console.log("showMyad2", this.needShow), null != this.needShow && (console.log("showMyad3"), this.needShow ? (console.log("pre", preloader), void 0 == preloader && this.showGameEndLayer(), resEndComplete = !0, adEndComplete && resEndComplete && (console.log("showOver1"), this.showGameEndLayer())) : (console.log("gam"), this.showGameEndLayer()))
-                    }
+                    this.showGameEndLayer()
                 },
                 gotoEndLayer1: function() {
                     a.publicGameBool, this.showGameEndLayer()
-                },
-                showAd: function() {
-                    showMyAds()
                 },
                 showGameEndLayer: function() {
                     cc.find("Canvas/gameManager").getComponent("GameManager").GameOver()
@@ -3445,7 +3415,7 @@ console.log('12')
                 maxScoreText: cc.Label
             },
             onLoad: function() {
-                this.bgLayer.color = cc.color("#68b951"), this.standardScore = c.standScore, this.game_max_score = 200, this.rigthBtnGameName = null, this.rightBtnGameUrl = null, this.UIPosChange(), this.addClickBtns();
+                this.bgLayer.color = cc.color("#68b951"), this.standardScore = c.standScore, this.game_max_score = 200, this.rigthBtnGameName = null, this.rightBtnGameUrl = null, this.UIPosChange(), this.addClickBtns(), this.moreBtn.node.active = !1, this.rightBtn.node.active = !1, this.midGameText.node.active = !1;
                 var e = "\u6700\u9ad8\u7eaa\u5f55:",
                     t = this.returnCurrentLanType();
                 e = 1 == t ? "\u6700\u9ad8\u7eaa\u5f55:" : 2 == t ? "\u6700\u9ad8\u7d00\u9304:" : 4 == t ? "\ucd5c\uace0 \uae30\ub85d:" : "Highest Record:";
@@ -3494,12 +3464,12 @@ console.log('12')
             addClickBtns: function() {
                 var e = this;
                 e.moreBtn.node.on(cc.Node.EventType.TOUCH_START, function(e) {}), e.moreBtn.node.on(cc.Node.EventType.TOUCH_END, function(e) {
-                    console.log("MoreGame"), window.location.href = a.moreGameUrl
+                    console.log("MoreGame"), void 0
                 }), e.leftBtn.node.on(cc.Node.EventType.TOUCH_START, function(e) {}), e.leftBtn.node.on(cc.Node.EventType.TOUCH_END, function(e) {
                     c.GAME_OVER_BOOL = !0, c.gameScore = 0, o.loadingScene("MainGameScene")
                 }), e.rightBtn.node.on(cc.Node.EventType.TOUCH_START, function(e) {}), e.rightBtn.node.on(cc.Node.EventType.TOUCH_END, function(t) {
                     var n = null;
-                    n = null != e.rightBtnGameUrl && "" != e.rightBtnGameUrl ? e.rightBtnGameUrl : e.tempArr[1], window.location.href = n
+                    n = null != e.rightBtnGameUrl && "" != e.rightBtnGameUrl ? e.rightBtnGameUrl : e.tempArr[1], void 0
                 })
             },
             getContentByScore: function(e, t) {
@@ -3609,7 +3579,7 @@ console.log('12')
                                 var i = Math.abs(a.x - e.gameWidth / 2 - e._imageArr[0].x),
                                     r = Math.abs(a.y - e.gameHeight / 2 - e._imageArr[0].y);
                                 i <= 30 && r <= 30 && (c.noTouchBool = !1, null != o.recGameUrl && "" != o.recGameUrl && (e._imageArr[0].runAction(cc.sequence(cc.scaleTo(.1, .8), cc.scaleTo(.1, 1), cc.callFunc(function() {
-                                    window.location.href = o.recGameUrl
+                                    void 0
                                 }))), e._imageArr[1].runAction(cc.sequence(cc.scaleTo(.1, .8), cc.scaleTo(.1, 1)))), console.log("touchLinkHttp"))
                             }
                             return !0
@@ -3842,10 +3812,7 @@ console.log('12')
                 }, t.prototype.start = function() {
                     this.startPanel.children[1].scaleX = 0, this.startPanel.children[1].runAction(cc.scaleTo(.5, .9).easing(cc.easeBackOut())), this.startPanel.children[2].runAction(cc.repeatForever(cc.sequence(cc.scaleTo(.5, 1.1), cc.scaleTo(.5, 1), cc.delayTime(.5)))), this.initTitle(), cc.director.preloadScene("MainGameScene")
                 }, t.prototype.StartGame = function() {
-                    i.publicGameBool || adBreak({
-                        type: "next",
-                        name: "restart-game"
-                    }), this.startBtn.stopAllActions(), this.startBtn.runAction(cc.sequence(cc.scaleTo(.1, .8), cc.scaleTo(.1, 1), cc.callFunc(function() {
+                    !0, this.startBtn.stopAllActions(), this.startBtn.runAction(cc.sequence(cc.scaleTo(.1, .8), cc.scaleTo(.1, 1), cc.callFunc(function() {
                         cc.director.loadScene("MainGameScene")
                     })))
                 }, t.prototype.initTitle = function() {
