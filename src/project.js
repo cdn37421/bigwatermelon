@@ -989,7 +989,7 @@ window.__require = function e(t, n, o) {
                 }, t.prototype.ShowFailedUi = function(e, t) {
                     var n = this;
                     this.scheduleOnce(function() {
-                        r.default.Instance.HideScorePanel(), n.levelTxt.string = r.default.Instance.level.toString(), n.scoreLabel.string = s.default.score.toString(), n.highScoreLabel.string = t, n.resultTxt.string = n.GetContentByScore(e), n.overTxt.string = "\u5f53\u524d\u5173\u5361\u5df2\u5b8c\u6210" + Math.floor(r.default.Instance.nowYQ / r.default.Instance.passlevelYQ * 100) + "%", n.canClick = !1, n.levelTxt.string = e, n.bgMask.runAction(cc.fadeTo(.36, 150)), n.scheduleOnce(function() {
+                        r.default.Instance.HideScorePanel(), n.levelTxt.string = r.default.Instance.level.toString(), n.scoreLabel.string = s.default.score.toString(), n.highScoreLabel.string = t, n.resultTxt.string = n.GetContentByScore(e), n.overTxt.string = "本關進度：" + Math.floor(r.default.Instance.nowYQ / r.default.Instance.passlevelYQ * 100) + "%", n.canClick = !1, n.levelTxt.string = e, n.bgMask.runAction(cc.fadeTo(.36, 150)), n.scheduleOnce(function() {
                             i.default.CenteredUi(10, this.di, this.levelTxt.node, this.guan), this.failedUiBox.y = cc.winSize.height / 2 + this.failedUiBox.height / 2, this.failedUiBox.runAction(cc.sequence(cc.moveTo(.36, this.failedBoxPos).easing(cc.easeBackOut()), cc.callFunc(function() {
                                 this.clickMask.on(cc.Node.EventType.TOUCH_START, this.OnClickCloseMask, this), this.continueTip.opacity = 0, this.continueTip.runAction(cc.repeatForever(cc.sequence(cc.fadeIn(.5), cc.delayTime(.5), cc.fadeOut(.5)))), this.canClick = !0
                             }, this)))
@@ -1108,7 +1108,7 @@ window.__require = function e(t, n, o) {
                         opacity: 255
                     }).to(.3, {
                         opacity: 0
-                    }).union().repeatForever().start(), this.lineNode.children[0].active = !1, this.fruitS = ["PuTaoS", "YingTaoS", "JuZiS", "NingMengS", "MiHouTaoS", "XiHongShiS", "TaoS", "BoLuoS", "YeZiS", "XiGuaS"], this.createOneFruit(0)
+                    }).union().repeatForever().start(), this.lineNode.children[0].active = !1, this.fruitS = ["PuTaoS", "YingTaoS", "JuZiS", "NingMengS", "MiHouTaoS", "XiHongShiS", "TaoS", "BoLuoS", "YeZiS", "XiGuaS"], this.createOneFruit(0), this.showNextFruitPreview(0)
                 }, t.prototype.update = function(e) {
                     a.default.GameUpdateCtrl, this.lineNode.children[0].y - n.Instance.fruitHeigth < 100 && this.lineNode.children[0].y - n.Instance.fruitHeigth >= 0 && (this.lineNode.children[0].active = !0), this.lineNode.children[0].y - n.Instance.fruitHeigth > 100 && (this.lineNode.children[0].active = !1)
                 }, t.prototype.end = function() {
@@ -1146,6 +1146,45 @@ window.__require = function e(t, n, o) {
                         e < n && (e = n)
                     }
                     return e
+                }, t.prototype.showNextFruitPreview = function(e) {
+                    if (!this.nextFruitPreview) {
+                        var canvas = cc.find("Canvas");
+                        if (!canvas) return;
+                        var panel = new cc.Node("nextFruitPreview");
+                        panel.setContentSize(108, 106);
+                        panel.parent = canvas;
+                        panel.zIndex = 999;
+                        var widget = panel.addComponent(cc.Widget);
+                        widget.isAlignTop = !0;
+                        widget.isAlignRight = !0;
+                        widget.top = 118;
+                        widget.right = 14;
+                        widget.updateAlignment();
+                        var bg = panel.addComponent(cc.Graphics);
+                        bg.fillColor = cc.color(255, 255, 255, 220);
+                        if ("function" == typeof bg.roundRect) bg.roundRect(-54, -53, 108, 106, 14);
+                        else bg.rect(-54, -53, 108, 106);
+                        bg.fill();
+                        var labelNode = new cc.Node("nextFruitLabel");
+                        labelNode.parent = panel;
+                        labelNode.setPosition(0, 32);
+                        labelNode.setContentSize(100, 25);
+                        labelNode.color = cc.color(68, 87, 69);
+                        var label = labelNode.addComponent(cc.Label);
+                        label.string = "下一顆";
+                        label.fontFamily = "Arial";
+                        label.fontSize = 19;
+                        label.lineHeight = 23;
+                        label.horizontalAlign = cc.Label.HorizontalAlign.CENTER;
+                        var spriteNode = new cc.Node("nextFruitIcon");
+                        spriteNode.parent = panel;
+                        spriteNode.setPosition(0, -13);
+                        this.nextFruitPreviewSprite = spriteNode.addComponent(cc.Sprite);
+                        this.nextFruitPreviewSprite.sizeMode = cc.Sprite.SizeMode.CUSTOM;
+                        this.nextFruitPreview = panel
+                    }
+                    this.nextFruitPreviewSprite.spriteFrame = d.default.Instance.fruit[e];
+                    this.nextFruitPreviewSprite.node.setContentSize(58, 58)
                 }, t.prototype.createOneFruit = function(e) {
                     var t = this,
                         n = cc.instantiate(this.fruitPre);
@@ -1508,7 +1547,7 @@ window.__require = function e(t, n, o) {
             p = function(e) {
                 function t() {
                     var t = null !== e && e.apply(this, arguments) || this;
-                    return t.Rocker = null, t.stick = null, t.Max_r = 100, t.RockerJS = null, t.speed = 400, t.Arrow = null, t.knife = null, t.startPoint = null, t.touchPoint = null, t.endPoint = null, t.ddir = cc.v2(0, 0), t.isCut = !1, t.comboTime = 0, t.comboInterval = .4, t.comboNumber = 0, t.comboMaxNum = 7, t.createFruitCount = 0, t.istest = !1, t
+                    return t.Rocker = null, t.stick = null, t.Max_r = 100, t.RockerJS = null, t.speed = 400, t.Arrow = null, t.knife = null, t.startPoint = null, t.touchPoint = null, t.endPoint = null, t.ddir = cc.v2(0, 0), t.isCut = !1, t.comboTime = 0, t.comboInterval = .4, t.comboNumber = 0, t.comboMaxNum = 7, t.createFruitCount = 0, t.nextFruitId = 0, t.istest = !1, t
                 }
                 var n;
                 return o(t, e), n = t, t.prototype.onLoad = function() {
@@ -1529,9 +1568,24 @@ window.__require = function e(t, n, o) {
                     i.default.playerTouch && null != a.default.Instance.targetFruit && (a.default.Instance.targetFruit.x = this.node.convertToNodeSpaceAR(e.getLocation()).x)
                 }, t.prototype.onTouchEnd = function(e) {
                     var t = this;
-                    i.default.playerTouch && null != a.default.Instance.targetFruit && (a.default.Instance.targetFruit.getComponent(cc.PhysicsCircleCollider).radius = a.default.Instance.targetFruit.height / 2, a.default.Instance.targetFruit.getComponent(cc.PhysicsCircleCollider).apply(), a.default.Instance.targetFruit.getComponent(cc.RigidBody).type = cc.RigidBodyType.Dynamic, a.default.Instance.targetFruit.getComponent(cc.RigidBody).linearVelocity = cc.v2(0, -800), a.default.Instance.targetFruit = null, this.scheduleOnce(function() {
-                        i.default.GameUpdateCtrl && (0 == t.createFruitCount ? (a.default.Instance.createOneFruit(0), t.createFruitCount++) : 1 == t.createFruitCount ? (a.default.Instance.createOneFruit(0), t.createFruitCount++) : 2 == t.createFruitCount ? (a.default.Instance.createOneFruit(1), t.createFruitCount++) : 3 == t.createFruitCount ? (a.default.Instance.createOneFruit(2), t.createFruitCount++) : 4 == t.createFruitCount ? (a.default.Instance.createOneFruit(2), t.createFruitCount++) : 5 == t.createFruitCount ? (a.default.Instance.createOneFruit(3), t.createFruitCount++) : t.createFruitCount > 5 && (a.default.Instance.createOneFruit(s.default.RandomInteger(0, 5)), t.createFruitCount++))
-                    }, .5))
+                    if (i.default.playerTouch && null != a.default.Instance.targetFruit) {
+                        var fruit = a.default.Instance.targetFruit;
+                        fruit.getComponent(cc.PhysicsCircleCollider).radius = fruit.height / 2;
+                        fruit.getComponent(cc.PhysicsCircleCollider).apply();
+                        fruit.getComponent(cc.RigidBody).type = cc.RigidBodyType.Dynamic;
+                        fruit.getComponent(cc.RigidBody).linearVelocity = cc.v2(0, -800);
+                        a.default.Instance.targetFruit = null;
+                        this.scheduleOnce(function() {
+                            if (!i.default.GameUpdateCtrl) return;
+                            a.default.Instance.createOneFruit(t.nextFruitId);
+                            t.createFruitCount++;
+                            t.nextFruitId = t.getNextFruitId();
+                            a.default.Instance.showNextFruitPreview(t.nextFruitId)
+                        }, .5)
+                    }
+                }, t.prototype.getNextFruitId = function() {
+                    var initial = [0, 0, 1, 2, 2, 3];
+                    return this.createFruitCount < initial.length ? initial[this.createFruitCount] : s.default.RandomInteger(0, 5)
                 }, t.prototype.closeTouch = function() {
                     this.node.off(cc.Node.EventType.TOUCH_START, this.onTouchStart, this), this.node.off(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this), this.node.off(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this), this.node.off(cc.Node.EventType.TOUCH_CANCEL, this.onTouchEnd, this)
                 }, t.prototype.addScore = function() {
@@ -1676,25 +1730,25 @@ window.__require = function e(t, n, o) {
         cc._RF.push(t, "4754e8KuPZJCqklCNyKpG29", "LanguageSetJs");
         t.exports = {
             language_1: {
-                game_name: "\u300c\u5c04\u82f9\u679c\u300d",
-                game_name1: "\u5c04\u82f9\u679c",
-                game_info: "\u628a\u63e1\u65f6\u673a\uff0c\u5c04\u4e2d\u82f9\u679c\u3002",
-                txtStart: "\u5f00\u59cb",
-                txtMore: "\u66f4\u591a\u6e38\u620f",
-                txtAgain: "\u518d\u73a9\u4e00\u6b21",
-                txtShare1: "\u5728\u6e38\u620f\u4e2d ",
-                txtShare2: "\u5f97\u5206\u4e86\uff0c\u597d\u554a!\u4f60\u548c\u6211\u4e00\u8d77\u6765\u6bd4\u8d5b!",
+                game_name: "合成大西瓜",
+                game_name1: "合成大西瓜",
+                game_info: "把相同水果合在一起，挑戰更高分！",
+                txtStart: "開始遊戲",
+                txtMore: "更多遊戲",
+                txtAgain: "再玩一次",
+                txtShare1: "在遊戲中",
+                txtShare2: "得分了！一起挑戰吧！",
                 bgRgb: "#3698C5",
-                gameT1: "\u5173\u6ce8\u6211\u4eec",
-                gameT2: "\u7eb8\u724c\u63a5\u9f99",
-                gameT3: "\u9526\u4e0a\u6dfb\u82b1",
-                gameUrl1: "http://g.regogame.com/game/9/",
-                gameUrl2: "http://g.regogame.com/game/3/",
-                gameT11: "\u5173\u6ce8\u5fae\u4fe1",
-                gameT12: "\u5173\u6ce8Kakao",
-                gameT13: "\u5173\u6ce8Line",
-                gameEndL: "\u6e38 \u620f \u7ed3 \u675f",
-                gameEndL1: "\u7a0d \u5019 \u67e5 \u770b \u5206 \u6570"
+                gameT1: "關注我們",
+                gameT2: "",
+                gameT3: "",
+                gameUrl1: "",
+                gameUrl2: "",
+                gameT11: "",
+                gameT12: "",
+                gameT13: "",
+                gameEndL: "遊戲結束",
+                gameEndL1: "點擊查看分數"
             },
             language_2: {
                 game_name: "\u300cShot Apples\u300d",
@@ -1785,18 +1839,7 @@ window.__require = function e(t, n, o) {
                 o.GAME_OVER_BOOL = !1, a.gameOverShowText(o.gameScore, 1), this.node.runAction(cc.sequence(cc.delayTime(.5), cc.callFunc(this.gameEnd1.bind(this))))
             },
             returnCurrentLanType: function() {
-                var e = 1;
-                switch (cc.sys.language) {
-                    case cc.sys.LANGUAGE_CHINESE:
-                        "zh-TW" == window.navigator.language || "zh-tw" == window.navigator.language || "zh-HK" == window.navigator.language || "zh-hk" == window.navigator.language ? (cc.log("\u7e41\u4f53"), e = 2) : (cc.log("\u7b80\u4f53"), e = 1);
-                        break;
-                    case cc.sys.LANGUAGE_KOREAN:
-                        e = 4;
-                        break;
-                    default:
-                        e = 3
-                }
-                return e
+                return 2
             },
             gameEnd1: function() {
                 var e = this,
@@ -1893,9 +1936,11 @@ window.__require = function e(t, n, o) {
                 }, t.prototype.update = function(e) {
                     this.UpdateScoreLabel(e), this.lerpCtrl && this.lerpNumFunc(this.passlevelYQ), this.levelPanel.children[1].getComponent(cc.Label).string = s.default.Instance.GetLevel().toString()
                 }, t.prototype.adsButtonFunc = function() {
-                    if(b.default.Instance.targetFruit.name==='') return;
-                    b.default.Instance.targetFruit.destroy()
-                    b.default.Instance.createOneFruit(Math.floor(Math.random()*6))
+                    var game = b.default.Instance;
+                    if (!game || !game.targetFruit || !cc.isValid(game.targetFruit)) return;
+                    game.targetFruit.destroy();
+                    game.targetFruit = null;
+                    game.createOneFruit(Math.floor(Math.random() * 6))
                 }, t.prototype.TestPasslevel = function() {
                     var e = this;
                     this.lerpCtrl = !0, this.nowYQ >= this.passlevelYQ && (this.levelPanel.children[2].runAction(cc.sequence(cc.delayTime(1.3), cc.callFunc(function() {
@@ -1928,7 +1973,7 @@ window.__require = function e(t, n, o) {
                 }, t.prototype.InjuredEffect = function() {
                     this.injuredPanel.active = !0, this.injuredPanel.runAction(cc.sequence(cc.fadeTo(.1, 150), cc.fadeTo(.1, 0)))
                 }, t.prototype.HideScorePanel = function() {
-                    this.scorePanel.runAction(cc.moveBy(.5, 0, 250)), this.levelPanel.runAction(cc.moveBy(.5, 0, 250)), this.levelProgress.runAction(cc.moveBy(.5, 0, 250)), this.heartPanel.runAction(cc.moveBy(.5, 0, 250))
+                    this.scorePanel.runAction(cc.moveBy(.5, 0, 250)), this.levelPanel.runAction(cc.moveBy(.5, 0, 250)), this.levelProgress.runAction(cc.moveBy(.5, 0, 250)), this.heartPanel.runAction(cc.moveBy(.5, 0, 250)), b.default.Instance.nextFruitPreview && (b.default.Instance.nextFruitPreview.active = !1)
                 }, t.prototype.ShowScorePanel = function() {
                     var e = this.node.children[0].position;
                     this.scorePanel.runAction(cc.moveTo(.5, cc.v2(this.scorePanel.x, e.y - 20)).easing(cc.easeBackOut())), this.levelPanel.runAction(cc.moveTo(.5, e).easing(cc.easeBackOut())), this.levelProgress.runAction(cc.moveTo(.5, cc.v2(-230, e.y - 50)).easing(cc.easeBackOut())), this.heartPanel.runAction(cc.moveTo(.5, cc.v2(270, e.y - 50)).easing(cc.easeBackOut()))
@@ -2044,8 +2089,8 @@ window.__require = function e(t, n, o) {
                     }
                 },
                 initLanguage: function() {
-                    var e = null;
-                    return cc.sys.language == cc.sys.LANGUAGE_CHINESE ? (this.curType = 1, e = c.language_1) : (cc.log("\u82f1\u6587"), this.curType = 2, e = c.language_2), e
+                    this.curType = 1;
+                    return c.language_1
                 },
                 getLinkGameReturn: function(e, t, n, o) {
                     if (console.log("err0", e), console.log("err1", t), console.log("err2", n), console.log("err3", o), 0 == e) {
@@ -2835,18 +2880,7 @@ window.__require = function e(t, n, o) {
                 return e + Math.floor(Math.random() * (t - e + 1))
             },
             returnCurrentLanType: function() {
-                var e = 1;
-                switch (cc.sys.language) {
-                    case cc.sys.LANGUAGE_CHINESE:
-                        "zh-TW" == window.navigator.language || "zh-tw" == window.navigator.language || "zh-HK" == window.navigator.language || "zh-hk" == window.navigator.language ? (cc.log("\u7e41\u4f53"), e = 2) : (cc.log("\u7b80\u4f53"), e = 1);
-                        break;
-                    case cc.sys.LANGUAGE_KOREAN:
-                        e = 4;
-                        break;
-                    default:
-                        e = 3
-                }
-                return e
+                return 2
             }
         };
         t.exports = o, cc._RF.pop()
@@ -2969,18 +3003,7 @@ window.__require = function e(t, n, o) {
                 var n = this.localConvertWorldPointAR(e);
                 return this.worldConvertLocalPointAR(t, n)
             }, e.returnCurrentLanType = function() {
-                var e = 1;
-                switch (cc.sys.language) {
-                    case cc.sys.LANGUAGE_CHINESE:
-                        "zh-TW" == window.navigator.language || "zh-tw" == window.navigator.language || "zh-HK" == window.navigator.language || "zh-hk" == window.navigator.language ? (cc.log("\u7e41\u4f53"), e = 2) : (cc.log("\u7b80\u4f53"), e = 1);
-                        break;
-                    case cc.sys.LANGUAGE_KOREAN:
-                        e = 4;
-                        break;
-                    default:
-                        e = 3
-                }
-                return e
+                return 2
             }, e.cbPosToWorldPos = function(e, t, n, o, c, a) {
                 var i = n + (e.x - t.x / 2 + .5) * c,
                     r = o + (e.y + .5) * a;
@@ -3424,18 +3447,7 @@ console.log('12')
                 o ? o < c.gameScore && (this.setHisSocre(c.gameScore), o = c.gameScore) : (this.setHisSocre(c.gameScore), o = n), this.maxScoreText.string = e + o
             },
             returnCurrentLanType: function() {
-                var e = 1;
-                switch (cc.sys.language) {
-                    case cc.sys.LANGUAGE_CHINESE:
-                        "zh-TW" == window.navigator.language || "zh-tw" == window.navigator.language || "zh-HK" == window.navigator.language || "zh-hk" == window.navigator.language ? (cc.log("\u7e41\u4f53"), e = 2) : (cc.log("\u7b80\u4f53"), e = 1);
-                        break;
-                    case cc.sys.LANGUAGE_KOREAN:
-                        e = 4;
-                        break;
-                    default:
-                        e = 3
-                }
-                return e
+                return 2
             },
             setHisSocre: function(e) {
                 cc.sys.localStorage.setItem("HigScore_JiaoTong", e)
@@ -3448,7 +3460,7 @@ console.log('12')
                 var e = null;
                 e = 1 == a.langugeType ? this.getContentByScore(c.gameScore, a.gameNameText) : this.getContentByScore2(c.gameScore, a.gameNameText), console.log("nihao", a.endHttpShowInfo), null != a.endHttpShowInfo && "" != a.endHttpShowInfo && (cc.log("gototo"), e = a.endHttpShowInfo), this.overInfoT.string = e;
                 var t = this.overInfoT.node.height;
-                if (this.overInfoT.node.height = Math.ceil(e.length * this.overInfoT.fontSize / this.overInfoT.node.width) * t, document.title = e, console.log("gameOver txtMoreText", a.txtMoreText), this.midGameText.string = a.txtMoreText, this.leftBtnText.string = a.txtAgainText, this.tempArr = this.gameFocus(), null != a.ranLinkUrl()) {
+                if (this.overInfoT.node.height = Math.ceil(e.length * this.overInfoT.fontSize / this.overInfoT.node.width) * t, document.title = "合成大西瓜", console.log("gameOver txtMoreText", a.txtMoreText), this.midGameText.string = a.txtMoreText, this.leftBtnText.string = a.txtAgainText, this.tempArr = this.gameFocus(), null != a.ranLinkUrl()) {
                     var n = a.ranLinkUrl(),
                         o = a.ranLinkData.gameList[n].gameName;
                     this.rigthBtnGameName = o, this.rightBtnGameUrl = a.ranLinkData.gameList[n].gameUrl
@@ -3473,22 +3485,7 @@ console.log('12')
                 })
             },
             getContentByScore: function(e, t) {
-                var n = "\u6211\u771f\u662f\u592a\u5389\u5bb3\uff0c\u5728" + t + "\u4e2d\u7adf\u7136\u5f97\u4e861\u5206\uff0c\u5168\u7403\u53ea\u67091\u4e2a\u4eba\u5f971\u5206\uff01",
-                    o = parseInt(.3 * this.standardScore),
-                    c = parseInt(1.5 * this.standardScore),
-                    a = parseInt(2.5 * this.standardScore),
-                    i = parseInt(4 * this.standardScore);
-                if (e > 0 && e <= o) n = "\u6211\u5728" + t + "\u4e2d\u5f97\u4e86" + e + "\u5206\uff0c\u771f\u662f\u592a\u68d2\u4e86\uff0c\u518d\u7ec3\u7ec3\u5c31\u80fd\u8fbe\u5230\u6e38\u5203\u6709\u4f59\u7684\u5883\u754c\uff01";
-                else if (e > o && e <= this.standardScore) n = "\u6211\u5728" + t + "\u4e2d\u5f97\u4e86" + e + "\u5206\uff0c\u771f\u662f\u592a\u68d2\u4e86\uff0c\u518d\u7ec3\u7ec3\u5c31\u80fd\u8fbe\u5230\u6e38\u5203\u6709\u4f59\u7684\u5883\u754c\uff01";
-                else if (e > this.standardScore && e <= c) {
-                    n = "\u6211\u5728" + t + "\u4e2d\u5f97\u4e86" + e + "\u5206\uff0c\u51fb\u8d25\u4e86\u5168\u7403" + (Math.floor(12 * (e - this.standardScore) / (c - this.standardScore)) + 80) + "%\u7684\u73a9\u5bb6\uff0c\u8fdb\u5165\u4e86\u4fe1\u624b\u62c8\u6765\u7684\u5883\u754c\uff01"
-                } else if (e > c && e <= a) {
-                    n = "\u6211\u5728" + t + "\u4e2d\u5f97\u4e86" + e + "\u5206\uff0c\u51fb\u8d25\u4e86\u5168\u7403" + (Math.floor(7 * (e - c) / (a - c)) + 92) + "%\u7684\u73a9\u5bb6\uff0c\u8fdb\u5165\u4e86\u8fd0\u7528\u81ea\u5982\u7684\u5883\u754c\uff01"
-                } else if (e > a && e <= i) n = "\u6211\u5728" + t + "\u4e2d\u5f97\u4e86" + e + "\u5206\uff0c\u51fb\u8d25\u4e86\u5168\u740399%\u7684\u73a9\u5bb6\uff0c\u8fbe\u5230\u4e86\u884c\u4e91\u6d41\u6c34\u7684\u5883\u754c\uff01";
-                else if (e > i && e < this.game_max_score) {
-                    n = "\u6211\u5728" + t + "\u4e2d\u5f97\u4e86" + e + "\u5206\uff0c\u636e\u8bf4\u5168\u7403\u53ea\u6709 " + (20 - Math.ceil(17 * (e - i) / (this.game_max_score - i))) + "\u4e2a\u4eba\u8fbe\u5230\u8fd9\u4e2a\u6c34\u5e73\uff0c\u72ec\u5b64\u6c42\u8d25\uff01"
-                } else e >= this.game_max_score && (n = "\u6211\u5728" + t + "\u4e2d\u5f97\u4e86" + e + "\u5206\uff0c\u8d85\u8d8a\u4e86\u72ec\u5b64\u6c42\u8d25\uff0c\u5fc3\u6709\u7075\u7280\uff01");
-                return n
+                return "本局得分：" + e + " 分"
             },
             strlen: function(e) {
                 for (var t = 0, n = 0; n < e.length; n++) {
