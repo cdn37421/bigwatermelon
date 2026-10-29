@@ -2,9 +2,9 @@ name: Validate ad-free game
 
 on:
   push:
-    branches: [main, chore/remove-ads]
+    branches: [main, chore/remove-ads, 'feature/**']
   pull_request:
-    branches: [main]
+    branches: [main, chore/remove-ads]
 
 permissions:
   contents: read
